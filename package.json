@@ -1,0 +1,17 @@
+{
+  "name": "spotifyFamilyCheck",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "transfer": "rm -r node_modules",
+    "check": "node checker.js",
+    "telegramBot": "node telegramBot.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "google-spreadsheet": "^3.3.0",
+    "node-fetch": "2",
+    "node-schedule": "^2.1.0",
+    "telegraf": "^4.8.5"
+  }
+}

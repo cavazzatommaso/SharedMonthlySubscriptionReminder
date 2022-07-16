@@ -1,0 +1,24 @@
+{
+    "renewDate": 8,
+    "phrases": {
+        "1": "🚨🚨🚨 Yo you have one day to pay me sir",
+        "3": "🚨🚨 I don't like how you act. You have 3 days to pay me",
+        "7": "🚨 Just a Reminder that you didn't pay the subscription",
+        "0": "🌈 Hurray i like you. See you next month. Enjoy!"
+    },
+    "googleSpreadsheetId": "XXXXX-X-XXX-XXXXXXXXXXXXXXX",
+    "telegram" : {
+        "telegramBotToken": "123456789:XXXXXXXXXXXXXXXXXXXX",
+        "welcomeMessage": "Welcome $user, use $command to setup your account. If you have any problems contact me at @Username",
+        "usernameSuccessMessage": "Noice now you can activate the reminder with the command $command",
+        "usernameMessage": "Cool. Right your username as it is like in the Excel file. Ex: Elon",
+        "usernameErrorMessage": "Opsie seems like the entered username is wrong. Retry again using the comand $command",
+        "notificationOnMessage": "All done. If you want to disable notification use command $command",
+        "initErrorMessage": "Error seems like you didn't setup your username. Use $command to set it up",
+        "notificationOffMessage": "Notification disabled for your username. $command to re-enable it",
+        "genericErrorMessage":"Damn seems like you did something wrong. That's so sad. Try to start over /start",
+        "usernameCommand": "username",
+        "notificationOnCommand": "notify",
+        "notificationOffCommand": "disable"
+    }
+}
