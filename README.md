@@ -8,6 +8,7 @@ Run checker as node application
 
 ### TODO  
 Priority of TODOs are in order from High to Low priority
+- [ ] Cute name for the Repo
 - [ ] Documentation
 - [ ] Create Excel File Documentation
 - [ ] GoogleSheet Service Account Documentation ???
