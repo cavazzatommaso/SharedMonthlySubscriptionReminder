@@ -1,6 +1,6 @@
-const creds = require('./config/googleSheetService.json');
-const members = require("./config/members.json")
-const config = require("./config/config.json")
+const creds = require('../config/googleSheetService.json');
+const members = require("../config/members.json")
+const config = require("../config/config.json")
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const fetch = require("node-fetch")
@@ -103,6 +103,7 @@ console.log(`${NAMESPACE} Scheduler started`)
 console.log(`${NAMESPACE} Next run ${job.nextInvocation().toLocaleString()}`);
 
 // startCheck()
+module.exports = job
 
 
 

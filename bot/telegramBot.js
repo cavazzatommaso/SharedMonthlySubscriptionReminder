@@ -1,7 +1,7 @@
-const members = require("./config/members.json")
-const util = require("./util/helpers")
+const members = require("../config/members.json")
+const util = require("../util/helpers")
 
-const config = require("./config/config.json")
+const config = require("../config/config.json")
 const { Telegraf, session } = require('telegraf')
 
 

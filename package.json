@@ -12,6 +12,8 @@
     "google-spreadsheet": "^3.3.0",
     "node-fetch": "2",
     "node-schedule": "^2.1.0",
-    "telegraf": "^4.8.5"
+    "prompt-sync": "^4.2.0",
+    "telegraf": "^4.8.5",
+    "yargs": "^17.5.1"
   }
 }
