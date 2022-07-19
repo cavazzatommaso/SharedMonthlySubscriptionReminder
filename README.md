@@ -6,6 +6,10 @@ Create a Service Account with Google Dashboard
 Run checker as node application  
 (Optional) run Telegram Bot to handle members notification  
 
+## What's working
+Checker is fully working. Has a scheduler that run every day at 13:00 and check how many days left for the renew and handle the notification
+TelegramBot is working. Not great but working.  
+
 ### TODO  
 Priority of TODOs are in order from High to Low priority
 - [ ] Cute name for the Repo
