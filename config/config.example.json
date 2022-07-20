@@ -8,6 +8,7 @@
     },
     "googleSpreadsheetId": "XXXXX-X-XXX-XXXXXXXXXXXXXXX",
     "telegram" : {
+        "adminId": 123456789,
         "telegramBotToken": "123456789:XXXXXXXXXXXXXXXXXXXX",
         "welcomeMessage": "Welcome $user, use $command to setup your account. If you have any problems contact me at @Username",
         "usernameSuccessMessage": "Noice now you can activate the reminder with the command $command",
@@ -19,6 +20,7 @@
         "genericErrorMessage":"Damn seems like you did something wrong. That's so sad. Try to start over /start",
         "usernameCommand": "username",
         "notificationOnCommand": "notify",
-        "notificationOffCommand": "disable"
+        "notificationOffCommand": "disable",
+        "statusCommand": "status"
     }
 }
