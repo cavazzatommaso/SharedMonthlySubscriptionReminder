@@ -18,13 +18,13 @@ bot.use(async (ctx, next) => {
     await next();
     const ms = new Date() - start;
     console.log(`${NAMESPACE} User: ${ctx.from.first_name}\tAction: ${ctx.message.text}\tResponse time: ${ms}ms`);
-  });
+});
 
 
 // Start command
 bot.start((ctx) => {
     ctx.session ??= sessionDefault
-    ctx.reply(config.telegram.welcomeMessage.replace("$user", ctx.chat.first_name).replace("$command",`/${config.telegram.usernameCommand}`))
+    ctx.reply(config.telegram.welcomeMessage.replace("$user", ctx.chat.first_name).replace("$command", `/${config.telegram.usernameCommand}`))
 })
 
 // ---- Username ----
@@ -43,14 +43,14 @@ bot.command(config.telegram.usernameCommand, (ctx) => {
 // Notification On
 bot.command(config.telegram.notificationOnCommand, async (ctx) => {
     try {
-        if(ctx.session.username != undefined){
+        if (ctx.session.username != undefined) {
             members[ctx.session.username].telegramID = ctx.from.id;
-            await util.saveFile("./config/members.json",members)
+            await util.saveFile("./config/members.json", members)
             console.log(`${NAMESPACE} Notification On`);
-            ctx.reply(config.telegram.notificationOnMessage.replace("$command",`/${config.telegram.notificationOffCommand}`))
+            ctx.reply(config.telegram.notificationOnMessage.replace("$command", `/${config.telegram.notificationOffCommand}`))
             return;
         }
-        ctx.reply(config.telegram.initErrorMessage.replace("$command",`/${config.telegram.usernameCommand}`))
+        ctx.reply(config.telegram.initErrorMessage.replace("$command", `/${config.telegram.usernameCommand}`))
     } catch (error) {
         console.log(error);
         ctx.reply(config.telegram.genericErrorMessage)
@@ -60,18 +60,33 @@ bot.command(config.telegram.notificationOnCommand, async (ctx) => {
 // Notification Off
 bot.command(config.telegram.notificationOffCommand, async (ctx) => {
     try {
-        if(ctx.session.username != undefined){
+        if (ctx.session.username != undefined) {
             members[ctx.session.username].telegramID = null;
-            await util.saveFile("./config/members.json",members)
+            await util.saveFile("./config/members.json", members)
             console.log(`${NAMESPACE} Notification Off`);
-            ctx.reply(config.telegram.notificationOffMessage.replace("$command",`/${config.telegram.notificationOnCommand}`))
+            ctx.reply(config.telegram.notificationOffMessage.replace("$command", `/${config.telegram.notificationOnCommand}`))
             return;
         }
-        ctx.reply(config.telegram.initErrorMessage.replace("$command",`/${config.telegram.usernameCommand}`))
+        ctx.reply(config.telegram.initErrorMessage.replace("$command", `/${config.telegram.usernameCommand}`))
     } catch (error) {
         ctx.reply(config.telegram.genericErrorMessage)
         return;
     }
+})
+
+// ----- Status -----
+bot.command(config.telegram.statusCommand, async (ctx) => {
+    if (ctx.from.id !== config.telegram.adminId)
+        return;
+
+    let response = Object.keys(members).reduce((message, user) => {
+        if(members[user].contactBy == "Telegram" && members[user].telegramID !== null)
+            message += `<b>${user}</b>: ${members[user].telegramID}\n`
+        return message;
+    }, "User with notification on: \n\| Username \t\| Account Id \t\|\n")
+
+    ctx.reply(response,{parse_mode:"HTML"})
+
 })
 
 
@@ -83,22 +98,23 @@ bot.on('message', async (ctx) => {
         // refactoring member array
         let refactorArrayMember = Object.keys(members).map((member) => member.toLowerCase())
         let indexOfMember = refactorArrayMember.indexOf(ctx.message.text.toLowerCase())
-        
+
         // Check if username is in the Google Sheet
-        if(indexOfMember >= 0){
+        if (indexOfMember >= 0) {
             console.log(`${NAMESPACE} Username Found`);
             ctx.session.username = Object.keys(members)[indexOfMember]
-            ctx.reply(config.telegram.usernameSuccessMessage.replace("$command",`/${config.telegram.notificationOnCommand}`))
-            return ;
+            ctx.reply(config.telegram.usernameSuccessMessage.replace("$command", `/${config.telegram.notificationOnCommand}`))
+            return;
         }
         ctx.reply(config.telegram.usernameErrorMessage)
-        return ;
+        return;
     }
 })
 
 bot.launch()
 
 console.log(`${NAMESPACE} Telegram bot running`);
+
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
