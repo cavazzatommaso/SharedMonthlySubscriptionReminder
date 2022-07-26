@@ -5,16 +5,24 @@ const config = require("./config/config.json")
 const { Telegraf, session } = require('telegraf')
 
 
-const sessionDefault = { username: undefined, waitingForUsername: false }
+const sessionDefault = { username: undefined, waitingForUsername: false, alredyChecked: false }
 const NAMESPACE = "[TELEGRAM_BOT]"
 
 
 const bot = new Telegraf(config.telegram.telegramBotToken)
 bot.use(session())
 
-// Logger middleware
+// Custom middleware
 bot.use(async (ctx, next) => {
     const start = new Date();
+    ctx.session ??= sessionDefault
+    if(ctx.session.username == undefined && !ctx.session.alredyChecked){
+        for(let member of Object.keys(members)){
+            if(members[member].telegramID == ctx.from.id)
+                ctx.session.username = member
+        }
+    }
+    ctx.session.alredyChecked = true;
     await next();
     const ms = new Date() - start;
     console.log(`${NAMESPACE} User: ${ctx.from.first_name}\tAction: ${ctx.message.text}\tResponse time: ${ms}ms`);
@@ -23,7 +31,6 @@ bot.use(async (ctx, next) => {
 
 // Start command
 bot.start((ctx) => {
-    ctx.session ??= sessionDefault
     ctx.reply(config.telegram.welcomeMessage.replace("$user", ctx.chat.first_name).replace("$command", `/${config.telegram.usernameCommand}`))
 })
 
