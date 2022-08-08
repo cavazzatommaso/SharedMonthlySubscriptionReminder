@@ -20,7 +20,7 @@ const connectToGoogleSpreadSheet = async () => {
 // TODO Move to Helper
 const calculateNextRenew = () => {
     let today = new Date()
-    let beforeRenew = today.getDate() < renewDate ? true : false;
+    let beforeRenew = today.getDate() <= renewDate ? true : false;
     let nextRenewDate = new Date(today.getFullYear(), today.getMonth(), renewDate)
     if (!beforeRenew)
         nextRenewDate = new Date(nextRenewDate.setMonth(nextRenewDate.getMonth() + 1));
@@ -38,7 +38,7 @@ const calculateDaysBefore = (nextRenewDate) => {
 const handleNotification = async (member, message) => {
     // Telegram as notification
     if (members[member].contactBy == 'Telegram' && members[member].telegramID) {
-        let response = await fetch(`https://api.telegram.org/bot${config.telegram.telegramBotToken}/sendMessage?chat_id=${members[member].telegramID}&text=${message}`)
+        let response = await fetch(`https://api.telegram.org/bot${config.telegram.telegramBotToken}/sendMessage?chat_id=${members[member].telegramID}&text=${encodeURIComponent(message)}&parse_mode=html`)
         console.log(`${NAMESPACE} Request url: ${response.url}`);
         console.log(`${NAMESPACE} Request status: ${response.status}`);
         console.log(await response.json());
