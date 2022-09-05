@@ -19,6 +19,7 @@
         "notificationOffMessage": "Notification disabled for your username. $command to re-enable it",
         "genericErrorMessage":"Damn seems like you did something wrong. That's so sad. Try to start over /start",
         "usernameCommand": "username",
+        "addPaymentCommand": "add",
         "notificationOnCommand": "notify",
         "notificationOffCommand": "disable",
         "statusCommand": "status"

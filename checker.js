@@ -1,8 +1,7 @@
-const creds = require('./config/googleSheetService.json');
 const members = require("./config/members.json")
 const config = require("./config/config.json")
+const excel = require("./util/excel")
 
-const { GoogleSpreadsheet } = require('google-spreadsheet');
 const fetch = require("node-fetch")
 const schedule = require('node-schedule');
 
@@ -10,12 +9,6 @@ const renewDate = config.renewDate
 const NAMESPACE = "[CHECKER]"
 
 
-// TODO Move to Helper
-const connectToGoogleSpreadSheet = async () => {
-    const doc = new GoogleSpreadsheet(config.googleSpreadsheetId);
-    await doc.useServiceAccountAuth(creds);
-    return doc;
-}
 
 // TODO Move to Helper
 const calculateNextRenew = () => {
@@ -50,7 +43,7 @@ const handleNotification = async (member, message) => {
 }
 
 const checkForMembers = async (nextRenewDate, daysBefore) => {
-    let doc = await connectToGoogleSpreadSheet()
+    let doc = await excel.connectToGoogleSpreadSheet()
     await doc.loadInfo()
 
     let sheet = doc.sheetsByIndex[0];

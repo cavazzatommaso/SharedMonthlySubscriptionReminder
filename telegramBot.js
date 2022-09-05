@@ -1,5 +1,7 @@
 const members = require("./config/members.json")
 const util = require("./util/helpers")
+const excel = require("./util/excel")
+
 
 const config = require("./config/config.json")
 const { Telegraf, session } = require('telegraf')
@@ -93,6 +95,45 @@ bot.command(config.telegram.statusCommand, async (ctx) => {
     }, "User with notification on: \n\| Username \t\| Account Id \t\|\n")
 
     ctx.reply(response,{parse_mode:"HTML"})
+
+})
+
+// ----- Add payments -----
+bot.command(config.telegram.addPaymentCommand, async (ctx) => {
+    if (ctx.from.id !== config.telegram.adminId)
+        return;
+
+    let addToMember = ctx.message.text.split("add ")[1].toLowerCase()
+    let member = Object.keys(members).map((name) => {
+        if(name.toLowerCase() == addToMember)
+            return name
+    }).join("")
+
+    if(member == ""){
+        ctx.reply(config.telegram.genericErrorMessage,{parse_mode:"HTML"})
+        return;
+    }
+
+
+    let doc = await excel.connectToGoogleSpreadSheet()
+    await doc.loadInfo()
+
+    let sheet = doc.sheetsByIndex[0];
+
+    const rows = await sheet.getRows();
+    let changed = false
+
+    for(let row of rows){
+        if(!changed && (row[member]=="" || row[member] == undefined)){
+            changed = true
+            row[member] = "X"
+            await row.save();
+        }
+    }
+
+    ctx.reply(`Payment added to ${member}`,{parse_mode:"HTML"})
+
+
 
 })
 
