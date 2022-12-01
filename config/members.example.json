@@ -1,18 +1,22 @@
 {
     "User1": {
         "contactBy": "Telegram",
-        "telegramID": 1011010101
+        "telegramID": 1011010101,
+        "notify": false
     },
     "User2": {
         "contactBy": "Telegram",
-        "telegramID": null
+        "telegramID": null,
+        "notify": false
     },
     "User3": {
         "contactBy": "Telegram",
-        "telegramID": 1011010101
+        "telegramID": 1011010101,
+        "notify": false
     },
     "User4": {
         "contactBy": "Telegram",
-        "telegramID": 1011010101
+        "telegramID": 1011010101,
+        "notify": false
     }
 }

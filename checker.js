@@ -30,7 +30,7 @@ const calculateDaysBefore = (nextRenewDate) => {
 // TODO Move to Helper
 const handleNotification = async (member, message) => {
     // Telegram as notification
-    if (members[member].contactBy == 'Telegram' && members[member].telegramID) {
+    if (members[member].contactBy == 'Telegram' && members[member].notify && members[member].telegramID) {
         let response = await fetch(`https://api.telegram.org/bot${config.telegram.telegramBotToken}/sendMessage?chat_id=${members[member].telegramID}&text=${encodeURIComponent(message)}&parse_mode=html`)
         console.log(`${NAMESPACE} Request url: ${response.url}`);
         console.log(`${NAMESPACE} Request status: ${response.status}`);

@@ -8,3 +8,6 @@ config/googleSheetService.json
 
 # System Services are not quite ready for now
 services/
+
+# Macos
+.DS_Store
